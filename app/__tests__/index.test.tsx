@@ -37,15 +37,17 @@ describe("Index (Task List screen)", () => {
   });
 
   it("hides completed task when switched to incomplete-only mode", async () => {
-    const { getByText, getByRole, queryByText } = render(<Index />);
+    const { getByText, getByRole, getAllByRole, queryByText } = render(<Index />);
 
-    const task = await waitFor(() => getByText("Mock Task 1"));
-    fireEvent.press(task);
+    await waitFor(() => getByText("Mock Task 1"));
+
+    const checkboxes = getAllByRole("checkbox");
+    fireEvent(checkboxes[0], "valueChange", true); // mark task complete
 
     const switchToggle = getByRole("switch");
-    fireEvent(switchToggle, "valueChange", true);
+    fireEvent(switchToggle, "valueChange", true); // filter incomplete only
 
-    expect(queryByText("Mock Task 1")).toBeNull();
+    expect(queryByText("Mock Task 1")).toBeNull(); // should now be hidden
   });
 
   it('shows "No remaining tasks" when no incomplete tasks', async () => {

@@ -13,7 +13,9 @@
   },
   "jest": {
     "preset": "jest-expo",
-    "setupFilesAfterEnv": ["@testing-library/jest-native/extend-expect"]
+    "setupFilesAfterEnv": [
+      "@testing-library/jest-native/extend-expect"
+    ]
   },
   "dependencies": {
     "@expo/vector-icons": "^14.0.2",
@@ -21,6 +23,7 @@
     "@react-navigation/native": "^7.0.14",
     "expo": "~52.0.40",
     "expo-blur": "~14.0.3",
+    "expo-checkbox": "~4.0.1",
     "expo-constants": "~17.0.8",
     "expo-font": "~13.0.4",
     "expo-haptics": "~14.0.1",
