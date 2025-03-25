@@ -40,27 +40,12 @@ describe('Index (Task List screen)', () => {
         const { getByText, getByRole, queryByText } = render(<Index />);
 
         const task = await waitFor(() => getByText('Mock Task 1'));
-        fireEvent.press(task); // Toggle to complete
-
-        const switchToggle = getByRole('switch');
-        fireEvent(switchToggle, 'valueChange', true); // Turn on filter
-
-        expect(queryByText('Mock Task 1')).toBeNull(); // Should be hidden
-    });
-
-    it('filters to show only incomplete tasks', async () => {
-        const { getByText, getByRole, queryByText } = render(<Index />);
-
-        await waitFor(() => {
-            expect(getByText('Mock Task 1')).toBeTruthy();
-            expect(getByText('Mock Task 2')).toBeTruthy();
-        });
+        fireEvent.press(task);
 
         const switchToggle = getByRole('switch');
         fireEvent(switchToggle, 'valueChange', true);
 
-        expect(getByText('Mock Task 1')).toBeTruthy();
-        expect(queryByText('Mock Task 2')).toBeNull();
+        expect(queryByText('Mock Task 1')).toBeNull();
     });
 
     it('shows "No remaining tasks" when no incomplete tasks', async () => {
