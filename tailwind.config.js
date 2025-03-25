@@ -9,7 +9,7 @@ module.exports = {
         primary: "#030014",
       },
       spacing: {
-        'safe': '64px',
+        'safe': '40px',
         'section': '24px',
       },
       fontSize: {

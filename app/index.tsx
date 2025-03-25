@@ -1,13 +1,20 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import {View, Text, ScrollView, TextInput, TouchableOpacity} from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context'
 import TaskItem from './components/TaskItem';
-import {Task} from "@/app/types";
+
+export type Task = {
+    id: string;
+    description: string;
+    isComplete: boolean;
+};
 
 const NUMBER_OF_TASKS = 5;
 const API_URL = `https://jsonplaceholder.typicode.com/todos?_limit=${NUMBER_OF_TASKS}`;
 
 export default function Index() {
   const [tasks, setTasks] = useState<Task[]>([]);
+  const [newTask, setNewTask] = useState('');
 
   useEffect(() => {
     const fetchTasks = async () => {
@@ -32,10 +39,33 @@ export default function Index() {
     );
   }, []);
 
-  return (
-      <View className="flex-1 bg-white pt-safe px-section">
-        <Text className="text-header font-bold mb-section">Task List</Text>
+    const addTask = () => {
+        if (newTask.trim() === '') return;
+        const newItem: Task = {
+            id: Date.now().toString(),
+            description: newTask.trim(),
+            isComplete: false,
+        };
 
+        setTasks(prev => [newItem, ...prev]);
+        setNewTask('');
+    };
+
+  return (
+      <SafeAreaView className="flex-1 bg-white px-section">
+        <Text className="text-header font-bold mb-section">Task List 1</Text>
+          <View className="flex-row items-center mb-section space-x-2">
+              <TextInput
+                  className="flex-1 border border-gray-300 rounded-md px-3 py-4 bg-white mr-2" onChange={content => setNewTask(content.nativeEvent.text)}
+                  value={newTask} placeholder={'Add a task'}
+              />
+              <TouchableOpacity
+                  onPress={addTask}
+                  className="bg-blue-500 px-4 py-4 rounded-md"
+              >
+                  <Text className="text-white font-semibold">Add</Text>
+              </TouchableOpacity>
+          </View>
         <ScrollView>
           {tasks.map(task => (
               <TaskItem
@@ -47,6 +77,6 @@ export default function Index() {
               />
           ))}
         </ScrollView>
-      </View>
+      </SafeAreaView>
   );
 }
