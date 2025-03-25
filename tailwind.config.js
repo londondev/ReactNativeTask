@@ -9,13 +9,13 @@ module.exports = {
         primary: "#030014",
       },
       spacing: {
-        'safe': '40px',
-        'section': '24px',
+        safe: "40px",
+        section: "24px",
       },
       fontSize: {
-        'header': '28px',
+        header: "28px",
       },
     },
   },
   plugins: [],
-}
+};
