@@ -76,7 +76,7 @@ export default function Index() {
                   onPress={addTask}
                   className="bg-blue-500 px-4 py-4 rounded-md"
               >
-                  <Text className="text-white font-semibold">Add</Text>
+                  <Text className="text-white font-semibold" testID="task-input">Add</Text>
               </TouchableOpacity>
           </View>
         <ScrollView>
