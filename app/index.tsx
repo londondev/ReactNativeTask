@@ -57,7 +57,6 @@ export default function Index() {
         ? tasks.filter(task => !task.isComplete)
         : tasks, [tasks, showIncompleteOnly]);
 
-
     return (
       <SafeAreaView className="flex-1 bg-white px-section">
         <Text className="text-header font-bold mb-section">Task List</Text>
@@ -81,6 +80,9 @@ export default function Index() {
               </TouchableOpacity>
           </View>
         <ScrollView>
+          {filteredTasks.length === 0 && (
+            <Text className="text-red-400 text-left text-xl font-semibold my-6">No remaining tasks!</Text>
+          )}
           {filteredTasks.map(task => (
               <TaskItem
                   key={task.id}
