@@ -16,6 +16,7 @@ const TaskItem: React.FC<TaskItemProps> = ({ id, description, isComplete, toggle
             value={isComplete}
             onValueChange={() => toggleComplete(id)}
             color={isComplete ? '#4caf50' : undefined}
+            style={{ width: 30, height: 30 }}
         />
         <Text
             className={`ml-3 text-base ${
