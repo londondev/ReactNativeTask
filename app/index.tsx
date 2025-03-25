@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import {View, Text, ScrollView, TextInput, TouchableOpacity} from 'react-native';
+import React, {useEffect, useState, useCallback, useMemo} from 'react';
+import {View, Text, ScrollView, TextInput, TouchableOpacity, Switch} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context'
 import TaskItem from './components/TaskItem';
 
@@ -15,8 +15,10 @@ const API_URL = `https://jsonplaceholder.typicode.com/todos?_limit=${NUMBER_OF_T
 export default function Index() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [newTask, setNewTask] = useState('');
+  const [showIncompleteOnly, setShowIncompleteOnly] = useState(false);
 
-  useEffect(() => {
+
+    useEffect(() => {
     const fetchTasks = async () => {
       const res = await fetch(API_URL);
       const data = await res.json();
@@ -51,9 +53,21 @@ export default function Index() {
         setNewTask('');
     };
 
-  return (
+    const filteredTasks = useMemo(() =>  showIncompleteOnly
+        ? tasks.filter(task => !task.isComplete)
+        : tasks, [tasks, showIncompleteOnly]);
+
+
+    return (
       <SafeAreaView className="flex-1 bg-white px-section">
-        <Text className="text-header font-bold mb-section">Task List 1</Text>
+        <Text className="text-header font-bold mb-section">Task List</Text>
+          <View className="flex-row items-center justify-end mb-4">
+              <Text className="mr-2">Show incomplete only</Text>
+              <Switch
+                  value={showIncompleteOnly}
+                  onValueChange={setShowIncompleteOnly}
+              />
+          </View>
           <View className="flex-row items-center mb-section space-x-2">
               <TextInput
                   className="flex-1 border border-gray-300 rounded-md px-3 py-4 bg-white mr-2" onChange={content => setNewTask(content.nativeEvent.text)}
@@ -67,7 +81,7 @@ export default function Index() {
               </TouchableOpacity>
           </View>
         <ScrollView>
-          {tasks.map(task => (
+          {filteredTasks.map(task => (
               <TaskItem
                   key={task.id}
                   id={task.id}
